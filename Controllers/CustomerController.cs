@@ -124,7 +124,7 @@ namespace LaundryApplication.Controllers
                         Status = order.Status,
                         DateCreated = order.DateCreated
                     })
-                .ToListAsync();
+                 .OrderByDescending(o => o.DateCreated).ToListAsync();
 
             if (orders == null || !orders.Any())
             {
@@ -137,7 +137,7 @@ namespace LaundryApplication.Controllers
 
         // GET: api/Customer/Orders/{id}
         [HttpGet("Orders/{id}")]
-            [Authorize]  // Ensure that the user is authenticated
+            //[Authorize]  // Ensure that the user is authenticated
             public async Task<ActionResult<Order>> GetOrderById(Guid id)
             {
                 var customerId = GetCustomerIdFromUser(); // Replace with actual method to get CustomerId
@@ -182,7 +182,7 @@ namespace LaundryApplication.Controllers
                 return Ok(new { message = "Order successfully cancelled." });
             }
             [HttpPut("Orders/{id}")]
-            [Authorize]  // Ensure that the user is authenticated
+            //[Authorize]  // Ensure that the user is authenticated
             public async Task<ActionResult> EditOrder(Guid id, [FromBody] Order updatedOrder)
             {
                 var customerId = GetCustomerIdFromUser(); // Get the logged-in user's CustomerId
